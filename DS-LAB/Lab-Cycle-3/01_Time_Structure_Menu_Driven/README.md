@@ -1,26 +1,27 @@
-````markdown
-# III LAB CYCLE - PROGRAM 01
+# ⏱️ III LAB CYCLE — PROGRAM 01
 
-## Time Structure - Menu Driven Program
-
-### Question
-
-Define a structure called Time containing 3 integer members (hour, minute, second). Develop a menu driven program to perform the following by writing separate function for each operation.
-
-a) Read (T): To read time  
-b) Display (T): To display time  
-c) update(T): To Update time  
-d) Add (T1, T2): Add two times.
-
-Update function increments the time by one second and returns the new time (if the increment results in 60 seconds, then the second member is set to zero and minute member is incremented by one. If the result is 60 minutes, the minute member is set to zero and the hour member is incremented by one. Finally, when the hour becomes 24, Time should be reset to zero.
-
-While adding two time variable, normalize the resultant time value as in the case of update function.
-
-**Note:** Illustrate the use of pointer to pass time variable to different functions.
+## Time Structure — Menu Driven Program
 
 ---
 
-## Program
+# 📌 Question
+
+Define a structure called `Time` containing 3 integer members (`hour`, `minute`, `second`). Develop a menu driven program to perform the following by writing separate function for each operation.
+
+**a) Read (T):** To read time
+**b) Display (T):** To display time
+**c) Update (T):** To update time
+**d) Add (T1, T2):** Add two times
+
+Update function increments the time by one second and returns the new time. If the increment results in 60 seconds, the second member is set to zero and the minute member is incremented by one. If the result is 60 minutes, the minute member is set to zero and the hour member is incremented by one. Finally, when the hour becomes 24, Time should be reset to zero.
+
+While adding two time variables, normalize the resultant time value as in the case of update function.
+
+> **Note:** Illustrate the use of pointer to pass time variable to different functions.
+
+---
+
+# 💻 Code
 
 ```c
 #include <stdio.h>
@@ -32,20 +33,17 @@ struct Time
     int second;
 };
 
-/* Function to read time */
 void Read(struct Time *T)
 {
     printf("Enter hour, minute and second: ");
     scanf("%d %d %d", &T->hour, &T->minute, &T->second);
 }
 
-/* Function to display time */
 void Display(struct Time *T)
 {
     printf("%02d:%02d:%02d\n", T->hour, T->minute, T->second);
 }
 
-/* Function to update time by one second */
 void Update(struct Time *T)
 {
     T->second++;
@@ -61,39 +59,31 @@ void Update(struct Time *T)
             T->hour++;
 
             if (T->hour == 24)
-            {
                 T->hour = 0;
-            }
         }
     }
 }
 
-/* Function to add two time values */
 void Add(struct Time *T1, struct Time *T2, struct Time *T3)
 {
     T3->second = T1->second + T2->second;
     T3->minute = T1->minute + T2->minute;
     T3->hour = T1->hour + T2->hour;
 
-    /* Normalize seconds */
     if (T3->second >= 60)
     {
         T3->second -= 60;
         T3->minute++;
     }
 
-    /* Normalize minutes */
     if (T3->minute >= 60)
     {
         T3->minute -= 60;
         T3->hour++;
     }
 
-    /* Normalize hours */
     if (T3->hour >= 24)
-    {
         T3->hour %= 24;
-    }
 }
 
 int main()
@@ -152,14 +142,14 @@ int main()
                 printf("Invalid choice! Please try again.\n");
         }
     }
-
-    return 0;
 }
-````
+```
 
 ---
 
-## Output 1 - Update Time
+# 🖥️ Output
+
+## 🔹 Output 1 — Update Time
 
 ```text
 ========== TIME MENU ==========
@@ -195,7 +185,7 @@ Program terminated.
 
 ---
 
-## Output 2 - Add Two Times
+## 🔹 Output 2 — Add Two Times
 
 ```text
 ========== TIME MENU ==========
@@ -228,91 +218,44 @@ Program terminated.
 
 ---
 
-## Important Concepts
+# 🎤 Important Viva Questions
 
-### 1. Structure
+### 01. What is a structure?
 
-```c
-struct Time
-{
-    int hour;
-    int minute;
-    int second;
-};
-```
+A structure is a user-defined data type that groups different data types under one name.
 
-The structure stores hour, minute and second as one variable.
+### 02. Why is `struct Time` used here?
 
-### 2. Pointer to Structure
+To store hour, minute, and second together as a single time variable.
 
-The functions receive the address of the structure.
+### 03. Why is a pointer used in the functions?
 
-```c
-void Update(struct Time *T)
-```
+To pass the address of the structure and directly modify its members.
 
-The function is called using:
+### 04. What does `T->hour` mean?
 
-```c
-Update(&T);
-```
+It accesses the `hour` member of the structure pointed to by `T`.
 
-Here, `&T` passes the address of `T`.
+### 05. What is the difference between `.` and `->`?
 
-Structure members are accessed using the arrow operator:
+`.` is used with a structure variable, while `->` is used with a pointer to a structure.
 
-```c
-T->hour
-T->minute
-T->second
-```
+### 06. Why do we use `&T` while calling `Read(&T)`?
 
-### 3. Update Logic
+`&T` passes the address of structure variable `T`.
 
-When seconds become 60:
+### 07. What happens when seconds become 60?
 
-```text
-seconds = 0
-minutes = minutes + 1
-```
+Seconds become `0` and minutes are incremented by `1`.
 
-When minutes become 60:
+### 08. What happens when hours become 24?
 
-```text
-minutes = 0
-hours = hours + 1
-```
+The time is reset to `00:00:00`.
 
-When hours become 24:
+### 09. What is normalization?
 
-```text
-hours = 0
-```
+Converting the result into a valid time format where seconds and minutes are below 60 and hours are below 24.
 
-### 4. Addition
+### 10. Why is `%02d` used in `Display()`?
 
-Two time values are added and then normalized so that:
-
-```text
-seconds < 60
-minutes < 60
-hours < 24
-```
-
----
-
-## File Structure
-
-```text
-01_Time_Structure_Menu_Driven/
-│
-├── README.md
-└── time.c
-```
-
-**README.md** → Question + Program + Outputs + Important Concepts for revision.
-
-**time.c** → Separate source file used for compilation and execution.
-
-```
-```
+It displays each time component using at least two digits, such as `09:05:07`.
