@@ -1,8 +1,12 @@
+---
+
 # LAB CYCLE 2 - STUDENT STRUCTURE
 
 ## Student Structure - Dynamic Memory Allocation
 
-### Question
+---
+
+## Question
 
 Define a structure called `Student` with the members: `Name`, `Reg_no`, marks in 3 tests and `average_marks`.
 
@@ -16,7 +20,7 @@ Develop a menu driven program to perform the following by writing separate funct
 
 ---
 
-## Program
+## Program / Code
 
 ```c
 #include <stdio.h>
@@ -31,7 +35,6 @@ struct Student
     float average_marks;
 };
 
-/* Function to read information of N students */
 void Read(struct Student *S, int N)
 {
     int i, j;
@@ -47,6 +50,7 @@ void Read(struct Student *S, int N)
         scanf("%d", &S[i].Reg_no);
 
         printf("Enter marks in 3 tests: ");
+
         for (j = 0; j < 3; j++)
         {
             scanf("%f", &S[i].marks[j]);
@@ -56,7 +60,6 @@ void Read(struct Student *S, int N)
     }
 }
 
-/* Function to calculate average of best two test marks */
 void CalculateAverage(struct Student *S, int N)
 {
     int i;
@@ -78,7 +81,6 @@ void CalculateAverage(struct Student *S, int N)
     }
 }
 
-/* Function to display student information */
 void Display(struct Student *S, int N)
 {
     int i;
@@ -95,8 +97,6 @@ void Display(struct Student *S, int N)
         printf("Test 3 Marks    : %.2f\n", S[i].marks[2]);
         printf("Average (Best 2): %.2f\n", S[i].average_marks);
     }
-
-    printf("\n=========================================\n");
 }
 
 int main()
@@ -123,7 +123,6 @@ int main()
         printf("2. Display Student Information\n");
         printf("3. Calculate Average of Best Two Tests\n");
         printf("4. Exit\n");
-        printf("==================================\n");
 
         printf("Enter your choice: ");
         scanf("%d", &choice);
@@ -140,7 +139,7 @@ int main()
 
             case 3:
                 CalculateAverage(S, N);
-                printf("\nAverage of best two test marks calculated successfully.\n");
+                printf("\nAverage calculated successfully.\n");
                 break;
 
             case 4:
@@ -149,13 +148,21 @@ int main()
                 return 0;
 
             default:
-                printf("Invalid choice! Please try again.\n");
+                printf("Invalid choice!\n");
         }
     }
 
     return 0;
 }
+```
 
+---
+
+## Output
+
+### Output 1
+
+```text
 Enter number of students: 2
 
 ========== STUDENT MENU ==========
@@ -176,61 +183,19 @@ Enter Name: Anjali
 Enter Register Number: 102
 Enter marks in 3 tests: 85 95 75
 
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
 Enter your choice: 3
 
 Average of best two test marks calculated successfully.
 
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
 Enter your choice: 4
 Program terminated.
+```
 
+### Output 2
+
+```text
 Enter number of students: 2
 
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
-Enter your choice: 1
-
-Enter details of Student 1
-Enter Name: Rahul
-Enter Register Number: 101
-Enter marks in 3 tests: 80 70 90
-
-Enter details of Student 2
-Enter Name: Anjali
-Enter Register Number: 102
-Enter marks in 3 tests: 85 95 75
-
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
-Enter your choice: 3
-
-Average of best two test marks calculated successfully.
-
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
 Enter your choice: 2
 
 ========== STUDENT INFORMATION ==========
@@ -252,22 +217,15 @@ Test 3 Marks    : 75.00
 Average (Best 2): 90.00
 
 =========================================
+```
 
-========== STUDENT MENU ==========
-1. Read Student Information
-2. Display Student Information
-3. Calculate Average of Best Two Tests
-4. Exit
-==================================
-Enter your choice: 4
-Program terminated.
+---
 
-````markdown
 ## Important Concepts
 
 ### 1. Structure
 
-A structure is used to group different types of data under one name.
+Groups different data types under one name.
 
 ```c
 struct Student
@@ -277,21 +235,19 @@ struct Student
     float marks[3];
     float average_marks;
 };
-````
-
-### 2. Array of Structures
-
-An array of structures stores information of multiple students.
-
-```c
-struct Student *S;
 ```
 
-Here, `S` points to the dynamically allocated array of student structures.
+### 2. Dynamic Memory Allocation
+
+Memory is allocated at runtime using `malloc()`.
+
+```c
+S = (struct Student *)malloc(N * sizeof(struct Student));
+```
 
 ### 3. Pointer to Structure
 
-A pointer to a structure is used to access and modify structure members.
+The pointer `S` accesses the dynamically allocated student structures.
 
 ```c
 S[i].Name
@@ -299,57 +255,17 @@ S[i].Reg_no
 S[i].marks[j]
 ```
 
-The pointer `S` is passed to functions so that the same student data can be accessed by different functions.
+### 4. Memory Deallocation
 
-### 4. Dynamic Memory Allocation
-
-Memory is allocated at runtime using `malloc()` based on the number of students entered by the user.
-
-```c
-S = (struct Student *)malloc(N * sizeof(struct Student));
-```
-
-This allocates memory for `N` student structures.
-
-### 5. Memory Deallocation
-
-Dynamically allocated memory must be released using `free()`.
+Memory is released using:
 
 ```c
 free(S);
 ```
 
-This prevents unnecessary memory usage.
+### 5. Average of Best Two Marks
 
-### 6. Passing Pointer to Functions
-
-The pointer to the structure array is passed to functions.
-
-```c
-Read(S, N);
-Display(S, N);
-CalculateAverage(S, N);
-```
-
-This allows functions to directly access the dynamically allocated student records.
-
-### 7. Finding the Lowest Mark
-
-To calculate the average of the best two tests, the lowest of the three marks is identified.
-
-```c
-lowest = S[i].marks[0];
-
-if (S[i].marks[1] < lowest)
-    lowest = S[i].marks[1];
-
-if (S[i].marks[2] < lowest)
-    lowest = S[i].marks[2];
-```
-
-### 8. Average of Best Two Marks
-
-The lowest mark is removed from the total of three marks.
+The lowest mark is removed before calculating the average.
 
 ```text
 Average = (Mark1 + Mark2 + Mark3 - Lowest Mark) / 2
@@ -358,47 +274,32 @@ Average = (Mark1 + Mark2 + Mark3 - Lowest Mark) / 2
 Example:
 
 ```text
-Marks = 80, 70, 90
+80, 70, 90
+
 Lowest = 70
 
 Average = (80 + 70 + 90 - 70) / 2
         = 85
 ```
 
-### 9. Menu Driven Program
+### 6. Menu Driven Program
 
-A `switch` statement is used to perform different operations according to the user's choice.
+A `switch` statement is used to select different operations.
 
-```c
-switch (choice)
-{
-    case 1:
-        Read(S, N);
-        break;
+### 7. Separate Functions
 
-    case 2:
-        Display(S, N);
-        break;
+- `Read()` → Reads student information
+- `Display()` → Displays student information
+- `CalculateAverage()` → Calculates average
 
-    case 3:
-        CalculateAverage(S, N);
-        break;
+---
 
-    case 4:
-        free(S);
-        return 0;
-}
-```
+## File Structure
 
-### 10. Separate Functions
-
-Each operation is implemented using a separate function:
-
-* `Read()` → Reads student information
-* `Display()` → Displays student information
-* `CalculateAverage()` → Calculates the average of the best two tests
-
-This improves code organization, readability, and reusability.
-
-```
+```text
+DS-LAB/
+└── Lab-Cycle-2/
+    └── Student_Structure_Dynamic_Memory/
+        ├── README.md
+        └── student.c
 ```
